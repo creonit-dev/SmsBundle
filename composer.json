@@ -1,0 +1,13 @@
+{
+  "name": "creonit/sms-bundle",
+  "type": "symfony-bundle",
+  "description": "",
+  "license": "MIT",
+  "keywords": [
+  ],
+  "autoload": {
+    "psr-4": {
+      "Creonit\\SmsBundle\\": ""
+    }
+  }
+}
