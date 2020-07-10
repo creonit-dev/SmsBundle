@@ -1,5 +1,0 @@
-services:
-  creonit_sms.provider.smstrafic:
-    class: Creonit\SmsBundle\SmsTraffic\SmsTrafficProvider
-    calls:
-      - ['setTemplating', ['@twig']]

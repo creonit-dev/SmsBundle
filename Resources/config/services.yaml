@@ -1,0 +1,21 @@
+services:
+    Creonit\SmsBundle\SmsMessenger:
+        class: Creonit\SmsBundle\SmsMessenger
+        autowire: true
+        autoconfigure: true
+
+    creonit.messenger.sms_handler:
+        alias: Creonit\SmsBundle\SmsMessenger
+        public: true
+
+    Creonit\SmsBundle\Transport\:
+        resource: '../../Transport/*Transport.php'
+        autowire: true
+        autoconfigure: true
+
+    creonit.sms.sms_traffic_transport:
+        alias: Creonit\SmsBundle\Transport\SmsTrafficTransport
+
+    creonit.sms.logger_transport:
+        alias: Creonit\SmsBundle\Transport\LoggerTransport
+

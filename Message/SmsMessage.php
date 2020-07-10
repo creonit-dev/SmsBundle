@@ -2,49 +2,71 @@
 
 namespace Creonit\SmsBundle\Message;
 
+use Creonit\SmsBundle\Mime\Phone;
+
 class SmsMessage
 {
-    protected $to;
+    /**
+     * @var Phone[]
+     */
+    protected $to = [];
     protected $content;
 
-    public function __construct($to = null)
+    public function __construct(string $content = '')
     {
-        if ($to) {
-            $this->setTo($to);
-        }
+        $this->content = $content;
     }
 
     /**
-     * @return mixed
+     * @return Phone[]
      */
-    public function getTo()
+    public function getTo(): array
     {
         return $this->to;
     }
 
     /**
-     * @param $to
+     * @param Phone|string ...$to
+     *
      * @return $this
      */
-    public function setTo($to)
+    public function setTo(...$to)
     {
-        $this->to = $to;
+        $this->to = [];
+        foreach ($to as $phone) {
+            $this->addTo($phone);
+        }
+
+        return $this;
+    }
+
+    public function addTo(...$to)
+    {
+        foreach ($to as $phone) {
+            if (is_string($phone)) {
+                $phone = Phone::create($phone);
+            }
+
+            $this->to[] = $phone;
+        }
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * @param $content
+     * @param string $content
+     *
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(string $content)
     {
         $this->content = $content;
         return $this;

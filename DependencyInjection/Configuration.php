@@ -2,6 +2,7 @@
 
 namespace Creonit\SmsBundle\DependencyInjection;
 
+use Creonit\SmsBundle\Transport\LoggerTransport;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -9,12 +10,12 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('creonit_sms');
+        $treeBuilder = new TreeBuilder('creonit_sms');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
-                ->variableNode('provider')->defaultValue('creonit_sms.provider.smstrafic')
+                ->scalarNode('transport')->defaultValue(LoggerTransport::class)
                     ->beforeNormalization()
                         ->ifTrue(function ($v) { return is_string($v) && 0 === strpos($v, '@'); })
                         ->then(function ($v) {
@@ -22,9 +23,8 @@ class Configuration implements ConfigurationInterface
                         })
                     ->end()
                 ->end()
-                ->arrayNode('provider_config')->isRequired()
-                    ->prototype('variable')
-                    ->end()
+                ->arrayNode('transport_config')
+                    ->prototype('variable')->end()
                 ->end()
             ->end();
 
