@@ -17,6 +17,7 @@
     "php": ">=7.2.5",
     "symfony/mime": "^4.4|^5.0",
     "symfony/twig-bundle": "^4.4|^5.0",
-    "symfony/messenger": "^4.4|^5.0"
+    "symfony/messenger": "^4.4|^5.0",
+    "symfony/event-dispatcher": "^4.4|^5.0"
   }
 }
