@@ -2,12 +2,11 @@
   "name": "creonit/sms-bundle",
   "type": "symfony-bundle",
   "description": "",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "keywords": [
     "creonit",
     "symfony"
   ],
-  "version": "1.0.0",
   "autoload": {
     "psr-4": {
       "Creonit\\SmsBundle\\": ""
