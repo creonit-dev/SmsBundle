@@ -5,6 +5,7 @@ namespace Creonit\SmsBundle\DependencyInjection;
 
 use Creonit\SmsBundle\Transport\SmsTransportInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -19,9 +20,16 @@ class CreonitSmsExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $transport = $container->getDefinition($config['transport']);
+        $container->setAlias(SmsTransportInterface::class, $this->createTransport($container, $config));
+    }
+
+    protected function createTransport(ContainerBuilder $container, array $config)
+    {
+        $transport = new ChildDefinition($config['transport']);
         $transport->addMethodCall('init', [$config['transport_config']]);
 
-        $container->setDefinition(SmsTransportInterface::class, $transport);
+        $container->setDefinition('creonit.sms.transport', $transport);
+
+        return 'creonit.sms.transport';
     }
 }
