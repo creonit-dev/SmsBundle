@@ -1,4 +1,8 @@
 services:
+    Creonit\SmsBundle\Admin\SmsModule:
+        tags:
+            - { name: creonit_admin.module }
+
     Creonit\SmsBundle\SmsMessenger:
         class: Creonit\SmsBundle\SmsMessenger
         autowire: true
@@ -10,6 +14,10 @@ services:
 
     Creonit\SmsBundle\Transport\:
         resource: '../../Transport/*Transport.php'
+        autowire: true
+        autoconfigure: true
+
+    Creonit\SmsBundle\Service\SmsLogService:
         autowire: true
         autoconfigure: true
 

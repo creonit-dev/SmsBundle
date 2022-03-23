@@ -7,30 +7,19 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class SmsMessageEvent extends Event
 {
-    /**
-     * @var SmsMessage
-     */
-    protected $message;
+    protected SmsMessage $message;
 
     public function __construct(SmsMessage $message)
     {
         $this->message = $message;
     }
 
-    /**
-     * @return SmsMessage
-     */
     public function getMessage(): SmsMessage
     {
         return $this->message;
     }
 
-    /**
-     * @param SmsMessage $message
-     *
-     * @return $this
-     */
-    public function setMessage(SmsMessage $message)
+    public function setMessage(SmsMessage $message): self
     {
         $this->message = $message;
         return $this;

@@ -2,24 +2,23 @@
 
 namespace Creonit\SmsBundle\Transport;
 
-
+use Creonit\SmsBundle\Service\SmsLogService;
 use Creonit\SmsBundle\Transport\Error\SmsTransportError;
 use Creonit\SmsBundle\Transport\Exception\InvalidConfigurationException;
 
 abstract class AbstractSmsTransport implements SmsTransportInterface
 {
-    /**
-     * @var SmsTransportConfiguration
-     */
-    protected $configuration;
+    protected SmsLogService $smsLogService;
+    protected SmsTransportConfiguration $configuration;
 
     /**
      * @var SmsTransportError[]
      */
     protected $errors = [];
 
-    public function __construct()
+    public function __construct(SmsLogService $smsLogService)
     {
+        $this->smsLogService = $smsLogService;
         $this->configuration = new SmsTransportConfiguration();
     }
 
@@ -36,7 +35,7 @@ abstract class AbstractSmsTransport implements SmsTransportInterface
         $this->errors[] = $error;
     }
 
-    public function init(array $configuration)
+    public function init(array $configuration): self
     {
         $this->configuration = new SmsTransportConfiguration($configuration);
         $this->validateConfiguration();
@@ -51,9 +50,10 @@ abstract class AbstractSmsTransport implements SmsTransportInterface
 
     protected function getRequiredParameter(string $key)
     {
-        $value = $this->configuration->get($key, null);
+        $value = $this->configuration->get($key);
+
         if (null === $value) {
-            throw new InvalidConfigurationException("Not defined parameter {$key}");
+            throw new InvalidConfigurationException("Not defined parameter $key");
         }
 
         return $value;

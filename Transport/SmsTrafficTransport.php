@@ -3,6 +3,7 @@
 namespace Creonit\SmsBundle\Transport;
 
 use Creonit\SmsBundle\Message\SmsMessage;
+use Creonit\SmsBundle\Model\SmsLog;
 use Creonit\SmsBundle\Transport\Error\SmsTransportError;
 use Creonit\SmsBundle\Transport\Exception\InvalidConfigurationException;
 
@@ -17,7 +18,15 @@ class SmsTrafficTransport extends AbstractSmsTransport
         }
 
         foreach ($message->getTo() as $phone) {
-            $this->sendMessage($message->getContent(), $phone->getNumber());
+            try {
+                $result = $this->sendMessage($message->getContent(), $phone->getNumber());
+                $status = SmsLog::STATUS_SUCCESS;
+            } catch (\Exception $e) {
+                $result = $e->getMessage();
+                $status = SmsLog::STATUS_ERROR;
+            }
+
+            $this->smsLogService->create($phone->getNumber(), $message->getContent(), $status, $result);
         }
     }
 
@@ -26,20 +35,20 @@ class SmsTrafficTransport extends AbstractSmsTransport
         return file_get_contents($this->makeUrl($content, $phone));
     }
 
-    protected function makeUrl(string $content, string $phone)
+    protected function makeUrl(string $content, string $phone): string
     {
         $query = http_build_query([
             'rus' => $this->getParameter('rus', 5),
             'login' => $this->getParameter('login'),
             'password' => $this->getParameter('password'),
             'phones' => $phone,
-            'message' => urlencode($content),
+            'message' => $content,
         ]);
 
         return sprintf('%s?%s', $this->getParameter('base_url', self::BASE_URL), $query);
     }
 
-    protected function validateConfiguration()
+    protected function validateConfiguration(): void
     {
         $requiredFields = ['login', 'password'];
 

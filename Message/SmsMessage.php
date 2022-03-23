@@ -10,7 +10,7 @@ class SmsMessage
      * @var Phone[]
      */
     protected $to = [];
-    protected $content;
+    protected string $content;
 
     public function __construct(string $content = '')
     {
@@ -30,7 +30,7 @@ class SmsMessage
      *
      * @return $this
      */
-    public function setTo(...$to)
+    public function setTo(...$to): self
     {
         $this->to = [];
         foreach ($to as $phone) {
@@ -40,7 +40,7 @@ class SmsMessage
         return $this;
     }
 
-    public function addTo(...$to)
+    public function addTo(...$to): self
     {
         foreach ($to as $phone) {
             if (is_string($phone)) {
@@ -53,20 +53,12 @@ class SmsMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     *
-     * @return $this
-     */
-    public function setContent(string $content)
+    public function setContent(string $content): self
     {
         $this->content = $content;
         return $this;

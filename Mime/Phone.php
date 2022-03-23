@@ -4,8 +4,8 @@ namespace Creonit\SmsBundle\Mime;
 
 class Phone
 {
-    protected $name;
-    protected $number;
+    protected string $name;
+    protected string $number;
 
     public function __construct(string $number, string $name = '')
     {
@@ -13,23 +13,17 @@ class Phone
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getNumber(): string
     {
         return $this->number;
     }
 
-    public static function create(string $number, string $name = '')
+    public static function create(string $number, string $name = ''): Phone
     {
         return new static($number, $name);
     }
