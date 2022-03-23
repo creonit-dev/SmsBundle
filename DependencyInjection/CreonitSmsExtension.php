@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Creonit\SmsBundle\DependencyInjection;
 
 use Creonit\SmsBundle\Transport\SmsTransportInterface;

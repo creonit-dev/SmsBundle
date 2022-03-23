@@ -2,7 +2,6 @@
 
 namespace Creonit\SmsBundle;
 
-
 use Creonit\SmsBundle\Event\PostSendSmsMessageEvent;
 use Creonit\SmsBundle\Event\PreSendSmsMessageEvent;
 use Creonit\SmsBundle\Event\SmsEvents;
@@ -18,8 +17,11 @@ class SmsMessenger implements MessageHandlerInterface
     protected LoggerInterface $logger;
     protected EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(SmsTransportInterface $transport, LoggerInterface $logger, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        SmsTransportInterface $transport,
+        LoggerInterface $logger,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->transport = $transport;
         $this->logger = $logger;
         $this->eventDispatcher = $eventDispatcher;

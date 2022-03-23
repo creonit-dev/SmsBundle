@@ -2,10 +2,9 @@
 
 namespace Creonit\SmsBundle\Transport;
 
-
 class SmsTransportConfiguration
 {
-    protected $parameters;
+    protected array $parameters;
 
     public function __construct(array $parameters = [])
     {
@@ -14,10 +13,12 @@ class SmsTransportConfiguration
 
     public function get(string $key, $default = null)
     {
-        return $this->has($key) ? $this->parameters[$key] : $default;
+        return $this->has($key)
+            ? $this->parameters[$key]
+            : $default;
     }
 
-    public function set(string $key, $value)
+    public function set(string $key, $value): void
     {
         $this->parameters[$key] = $value;
     }
@@ -27,7 +28,7 @@ class SmsTransportConfiguration
         return \array_key_exists($key, $this->parameters);
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->parameters;
     }

@@ -1,0 +1,26 @@
+config:
+    required: true
+
+database:
+    +:
+        name: default
+        namespace: Creonit\SmsBundle\Model
+        defaultIdMethod: native
+
+    +vendor:
+        type: mysql
+        parameters:
+            Engine: InnoDB
+            Charset: utf8
+
+    +behavior:
+        - auto_add_pk
+        - \Creonit\ContentBundle\Behavior\ContentBlockBehavior
+
+    sms_log:
+        phone: varchar(50)
+        content: text
+        status: int
+        response: text
+        +behavior:
+            - timestampable

@@ -2,7 +2,6 @@
 
 namespace Creonit\SmsBundle\Transport;
 
-
 use Creonit\SmsBundle\Message\SmsMessage;
 use Psr\Log\LoggerInterface;
 

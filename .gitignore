@@ -2,3 +2,6 @@
 /*.sublime-project
 /*.sublime-workspace
 thumbs.db
+
+/Model/Base/
+/Model/Map/
